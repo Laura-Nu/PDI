@@ -17,7 +17,6 @@ using AForge.Imaging.Filters;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace PDI_Mosaico
 {
