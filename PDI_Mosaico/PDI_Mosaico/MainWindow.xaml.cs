@@ -17,6 +17,9 @@ using AForge.Imaging.Filters;
 using Microsoft.Win32;
 using System.Windows.Forms;
 using System.IO;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace PDI_Mosaico
 {
@@ -36,13 +39,16 @@ namespace PDI_Mosaico
             InitializeComponent();
         }
 
-        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
+        private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
             {
                 string fileName = ofd.FileName;
                 originalImage = new BitmapImage(new Uri(fileName));
+                Display_image.Source = originalImage;
+                Display_image.Visibility = Visibility.Visible;
+                ImageButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -87,5 +93,87 @@ namespace PDI_Mosaico
             return imagesList.ToArray();
         }
 
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Display_image.Source != null)
+            {
+                SendButton.Visibility = Visibility.Collapsed;
+                ResultButtonsPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Control controlWindow = new Control();
+                controlWindow.Show(); 
+            }
+        }
+
+        private void RetryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Display_image.Source != null)
+            {
+                Display_image.Visibility = Visibility.Collapsed;
+                ImageButton.Visibility = Visibility.Visible;
+                SendButton.Visibility = Visibility.Visible;
+                ResultButtonsPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Control controlWindow = new Control();
+                controlWindow.Show();
+            }
+        }
+
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Display_image.Source != null)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Imagen JPEG|*.jpg|Imagen PNG|*.png";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string extension = System.IO.Path.GetExtension(saveFileDialog.FileName).ToLower();
+
+                    BitmapEncoder encoder = null;
+                    if (extension == ".jpg" || extension == ".jpeg")
+                    {
+                        encoder = new JpegBitmapEncoder();
+                    }
+                    else if (extension == ".png")
+                    {
+                        encoder = new PngBitmapEncoder();
+                    }
+
+                    if (encoder != null)
+                    {
+                        try
+                        {
+                            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Display_image.Source));
+                            using (FileStream fs = File.Open(saveFileDialog.FileName, FileMode.Create))
+                            {
+                                encoder.Save(fs);
+                            }
+                            System.Windows.MessageBox.Show("La imagen se guardó correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show($"Ocurrió un error al guardar la imagen: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Formato de archivo no compatible.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("No hay una imagen para guardar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

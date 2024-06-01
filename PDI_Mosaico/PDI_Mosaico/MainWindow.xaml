@@ -5,8 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PDI_Mosaico"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow"
+        Height="600"
+        Width="900"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#23262B">
+        <TextBlock Text="P I X E L  M O S A I C"
+                   Foreground="#FFFFFF"
+                   FontFamily="Fonts/#Orbitron Medium"
+                   FontSize="15"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="10,22,0,0" />
+
+
+
+        <Button x:Name="CloseBtn"
+                Style="{StaticResource CloseBtnStyle}"
+                Click="CloseBtn_Click" />
+
+        <Button x:Name="ImageButton"
+                FontFamily="Fonts/#Orbitron Medium"
+                FontSize="10"
+                Content="  C A R G A R  I M A G E N"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Height="400"
+                Width="856"
+                Background="#FF898989"
+                Click="ImageButton_Click" Margin="0,78,0,0" Foreground="White">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
+        <Image x:Name="Display_image"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Height="400"
+               Width="856"
+               Visibility="Collapsed" />
+
+        <Button x:Name="SendButton"
+                Content="E N V I A R"
+                FontFamily="Fonts/#Orbitron Medium"
+                FontSize="15"
+                Background="#2E333A"
+                Foreground="White"
+                HorizontalAlignment="Center"
+                Height="50"
+                Margin="0,536,0,0"
+                VerticalAlignment="Top"
+                Width="856"
+                Click="SendButton_Click" />
+
+        <StackPanel x:Name="ResultButtonsPanel"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="20,536,0,0"
+                    VerticalAlignment="Top"
+                    Width="856"
+                    Visibility="Collapsed">
+            <Button x:Name="RetryButton"
+                    Content="R E I N T E N T A R"
+                    FontFamily="Fonts/#Orbitron Medium"
+                    FontSize="15"
+                    Background="#2E333A"
+                    Foreground="White"
+                    Width="420"
+                    Height="50"
+                    Margin="0,0,16,0"
+                    Click="RetryButton_Click" />
+            <Button x:Name="DownloadButton"
+                    Content="D E S C A R G A R"
+                    FontFamily="Fonts/#Orbitron Medium"
+                    FontSize="15"
+                    Background="#2E333A"
+                    Foreground="White"
+                    Width="420"
+                    Height="50"
+                    Click="DownloadButton_Click" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -66,6 +66,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,12 +78,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Control.xaml.cs">
+      <DependentUpon>Control.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menu.xaml.cs">
+      <DependentUpon>Menu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +115,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\Orbitron-Medium.ttf" />
+    <Resource Include="Fonts\Roboto-Light.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -105,6 +125,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\img_about.png" />
+    <Resource Include="Assets\img_acoustic.png" />
+    <Resource Include="Assets\img_album.png" />
+    <Resource Include="Assets\img_arrow.png" />
+    <Resource Include="Assets\img_artist.png" />
+    <Resource Include="Assets\img_electronic.png" />
+    <Resource Include="Assets\img_exit.png" />
+    <Resource Include="Assets\img_folder.png" />
+    <Resource Include="Assets\img_genre.png" />
+    <Resource Include="Assets\img_hiphop.png" />
+    <Resource Include="Assets\img_history.png" />
+    <Resource Include="Assets\img_home.png" />
+    <Resource Include="Assets\img_hotkey.png" />
+    <Resource Include="Assets\img_input.png" />
+    <Resource Include="Assets\img_jazz.png" />
+    <Resource Include="Assets\img_metal.png" />
+    <Resource Include="Assets\img_movies.png" />
+    <Resource Include="Assets\img_music.png" />
+    <Resource Include="Assets\img_playlist.png" />
+    <Resource Include="Assets\img_pop.png" />
+    <Resource Include="Assets\img_rock.png" />
+    <Resource Include="Assets\img_search.png" />
+    <Resource Include="Assets\img_setting.png" />
+    <Resource Include="Assets\img_songs.png" />
+    <Resource Include="Assets\max_def.png" />
+    <Resource Include="Assets\max_mo.png" />
+    <Resource Include="Assets\shutdown_def.png" />
+    <Resource Include="Assets\shutdown_mo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
