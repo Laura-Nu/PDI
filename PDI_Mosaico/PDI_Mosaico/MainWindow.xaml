@@ -66,6 +66,15 @@
                 Width="856"
                 Click="SendButton_Click" />
 
+        <Button x:Name="btnLoadImages"
+        Content="C A R G A R  M O S A I C O"
+        FontFamily="Fonts/#Orbitron Medium"
+        FontSize="15"
+        Background="#2E333A"
+        Foreground="White"
+        Margin="565,14,70,550"
+        Click="btnLoadImages_Click" />
+
         <StackPanel x:Name="ResultButtonsPanel"
                     Orientation="Horizontal"
                     HorizontalAlignment="Left"

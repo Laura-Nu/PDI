@@ -120,6 +120,7 @@ namespace PDI_Mosaico
                 ImageButton.Visibility = Visibility.Visible;
                 SendButton.Visibility = Visibility.Visible;
                 ResultButtonsPanel.Visibility = Visibility.Collapsed;
+                Display_image.Source = null;
             }
             else
             {
