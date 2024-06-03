@@ -1,4 +1,4 @@
-﻿<Window x:Class="PDI_Mosaico.MainWindow"
+<Window x:Class="PDI_Mosaico.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,31 +15,40 @@
         <TextBlock Text="P I X E L  M O S A I C" Foreground="#FFFFFF" FontFamily="Fonts/#Orbitron Medium"
                    FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,22,0,0" />
 
-        <Button x:Name="CloseBtn" Style="{StaticResource CloseBtnStyle}" Click="CloseBtn_Click" />
 
-        <Button x:Name="LoadImageBtn" FontFamily="Fonts/#Orbitron Medium" FontSize="10" Content="  C A R G A R  I M A G E N" 
-                HorizontalAlignment="Center" VerticalAlignment="Top" Height="45" Width="252" Background="#FF898989"
-                Click="LoadImageBtn_Click" Margin="0,78,0,0" Foreground="White" />
+        <Button x:Name="LoadImageBtn" Content="C A R G A R   I M A G E N" FontFamily="Fonts/#Orbitron Medium"
+             FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
+             Margin="22,65,458,485" Click="LoadImageBtn_Click" />
+
+        <Button x:Name="btnLoadImages" Content="C A R G A R   C A R P E T A" FontFamily="Fonts/#Orbitron Medium" FontSize="15" 
+             Background="#2E333A" Foreground="White" Width="420" Height="50" Click="btnLoadImages_Click" Margin="458,65,22,485" />
+
+
+        <Button x:Name="RetryLoadImageBtn" Content="V O L V E R  A  C A R G A R   I M A G E N" FontFamily="Fonts/#Orbitron Medium"
+      FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
+      Margin="22,65,458,485" Click="RetryLoadImageBtn_Click" Visibility="Collapsed" />
+
+        <Button x:Name="RetrybtnLoadImages" Content="V O L V E R  A  C A R G A R   C A R P E T A" FontFamily="Fonts/#Orbitron Medium" FontSize="15" 
+      Background="#2E333A" Foreground="White" Width="420" Height="50" Click="RetrybtnLoadImages_Click" Visibility="Collapsed" Margin="458,65,22,485"/>
+
+        <Button x:Name="CloseBtn" Style="{StaticResource CloseBtnStyle}" Click="CloseBtn_Click" />
 
         <Button x:Name="SendButton" Content="E N V I A R" FontFamily="Fonts/#Orbitron Medium"
                 FontSize="15" Background="#2E333A" Foreground="White" HorizontalAlignment="Center"
                 Height="50" Margin="0,536,0,0" VerticalAlignment="Top" Width="856" Click="SendButton_Click" />
 
-        <Button x:Name="btnLoadImages" Content="C A R G A R  M O S A I C O" FontFamily="Fonts/#Orbitron Medium" 
-                FontSize="15" Background="#2E333A" Foreground="White" Margin="565,14,70,550" Click="btnLoadImages_Click" />
-
         <StackPanel x:Name="ResultButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,536,0,0"
                     VerticalAlignment="Top" Width="856" Visibility="Collapsed">
-            
+
             <Button x:Name="RetryButton" Content="R E I N T E N T A R" FontFamily="Fonts/#Orbitron Medium"
                     FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
                     Margin="0,0,16,0" Click="RetryButton_Click" />
-            
+
             <Button x:Name="DownloadButton" Content="D E S C A R G A R" FontFamily="Fonts/#Orbitron Medium" FontSize="15" 
                     Background="#2E333A" Foreground="White" Width="420" Height="50" Click="DownloadButton_Click" />
-            
+
         </StackPanel>
         <Image x:Name="img_display_original" HorizontalAlignment="Left" Height="358" Margin="22,142,0,0" VerticalAlignment="Top" Width="400"/>
-        <Image x:Name="img_display_result" HorizontalAlignment="Left" Height="358" Margin="469,142,0,0" VerticalAlignment="Top" Width="400"/>
+        <Image x:Name="img_display_result" HorizontalAlignment="Left" Height="358" Margin="472,142,0,0" VerticalAlignment="Top" Width="400"/>
     </Grid>
 </Window>
