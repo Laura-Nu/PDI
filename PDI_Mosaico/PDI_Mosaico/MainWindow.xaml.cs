@@ -41,8 +41,9 @@ namespace PDI_Mosaico
             {
                 string fileName = ofd.FileName;
                 originalImage = new BitmapImage(new Uri(fileName));
-                originalImage = ReduceResolution(originalImage, 85, 85);
                 img_display_original.Source = originalImage;
+                originalImage = ReduceResolution(originalImage, 85, 85);
+                
                 LoadImageBtn.Visibility = Visibility.Collapsed;
             }
         }
