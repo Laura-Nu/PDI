@@ -104,3 +104,32 @@ C:\Users\Dell\Downloads\PDI-main (1)\PDI-main\PDI_Mosaico\PDI_Mosaico\obj\Debug\
 C:\Users\Dell\Downloads\PDI-main (1)\PDI-main\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.CopyComplete
 C:\Users\Dell\Downloads\PDI-main (1)\PDI-main\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.exe
 C:\Users\Dell\Downloads\PDI-main (1)\PDI-main\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.pdb
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\PDI_Mosaico.exe.config
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\PDI_Mosaico.exe
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\PDI_Mosaico.pdb
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\AForge.dll
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\AForge.Imaging.dll
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\AForge.Math.dll
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\AForge.xml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\AForge.Imaging.xml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\AForge.Math.xml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.AssemblyReference.cache
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.SuggestedBindingRedirects.cache
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Templates.baml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Control.g.cs
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\MainWindow.g.cs
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Menu.g.cs
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\App.g.cs
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico_MarkupCompile.cache
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico_MarkupCompile.lref
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\App.baml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Control.baml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\MainWindow.baml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Menu.baml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.g.resources
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.Properties.Resources.resources
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.GenerateResource.cache
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.CoreCompileInputs.cache
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.CopyComplete
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.exe
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.pdb

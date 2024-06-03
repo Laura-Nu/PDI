@@ -12,26 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
 using System.Drawing.Imaging;
 using AForge.Imaging.Filters;
 using Microsoft.Win32;
-using System.Windows.Forms;
 using System.IO;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
-using MessageBox = System.Windows.Forms.MessageBox;
+using System.Windows.Threading;
+
 
 namespace PDI_Mosaico
 {
-    /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         BitmapImage originalImage;
-        BitmapImage mosaicoImage;
-        BitmapImage uploadedImage;
-        BitmapImage resultImage;
+        BitmapImage mosaicImage;
+        BitmapImage rowImage;
         BitmapImage[] images;
 
         public MainWindow()
@@ -39,35 +34,34 @@ namespace PDI_Mosaico
             InitializeComponent();
         }
 
-        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        private void LoadImageBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
             {
                 string fileName = ofd.FileName;
                 originalImage = new BitmapImage(new Uri(fileName));
-                Display_image.Source = originalImage;
-                Display_image.Visibility = Visibility.Visible;
-                ImageButton.Visibility = Visibility.Collapsed;
+                originalImage = ReduceResolution(originalImage, 20, 20);
+                img_display_original.Source = originalImage;
+                LoadImageBtn.Visibility = Visibility.Collapsed;
             }
         }
 
         private void btnLoadImages_Click(object sender, RoutedEventArgs e)
         {
             images = LoadImagesFromFolder();
-
+            images = ResizeImagesToSameSize(images);
             if (images.Length > 0)
             {
-                //imgDisplay.Source = images[1];
+                // imgDisplay.Source = images[1];
             }
         }
-
 
         private BitmapImage[] LoadImagesFromFolder()
         {
             var imagesList = new List<BitmapImage>();
 
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string folderPath = fbd.SelectedPath;
@@ -100,27 +94,11 @@ namespace PDI_Mosaico
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Display_image.Source != null)
+            if (img_display_original.Source != null)
             {
                 SendButton.Visibility = Visibility.Collapsed;
                 ResultButtonsPanel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Control controlWindow = new Control();
-                controlWindow.Show(); 
-            }
-        }
-
-        private void RetryButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Display_image.Source != null)
-            {
-                Display_image.Visibility = Visibility.Collapsed;
-                ImageButton.Visibility = Visibility.Visible;
-                SendButton.Visibility = Visibility.Visible;
-                ResultButtonsPanel.Visibility = Visibility.Collapsed;
-                Display_image.Source = null;
+                img_display_result.Source = GenerateMosaic(originalImage);
             }
             else
             {
@@ -129,9 +107,24 @@ namespace PDI_Mosaico
             }
         }
 
+        private void RetryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (img_display_original.Source != null)
+            {
+                LoadImageBtn.Visibility = Visibility.Visible;
+                SendButton.Visibility = Visibility.Visible;
+                ResultButtonsPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                var controlWindow = new Control();
+                controlWindow.Show();
+            }
+        }
+
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Display_image.Source != null)
+            if (img_display_result.Source != null)
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "Imagen JPEG|*.jpg|Imagen PNG|*.png";
@@ -153,27 +146,197 @@ namespace PDI_Mosaico
                     {
                         try
                         {
-                            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)Display_image.Source));
+                            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)img_display_result.Source));
                             using (FileStream fs = File.Open(saveFileDialog.FileName, FileMode.Create))
                             {
                                 encoder.Save(fs);
                             }
-                            System.Windows.MessageBox.Show("La imagen se guardó correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("La imagen se guardó correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         catch (Exception ex)
                         {
-                            System.Windows.MessageBox.Show($"Ocurrió un error al guardar la imagen: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Ocurrió un error al guardar la imagen: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else
                     {
-                        System.Windows.MessageBox.Show("Formato de archivo no compatible.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Formato de archivo no compatible.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             else
             {
-                System.Windows.MessageBox.Show("No hay una imagen para guardar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("No hay una imagen para guardar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        
+
+
+
+        private BitmapImage ReduceResolution(BitmapImage originalImage, int newWidth, int newHeight)
+        {
+            Bitmap bitmap = BitmapImage2Bitmap(originalImage);
+            Bitmap resizedBitmap = new Bitmap(bitmap, newWidth, newHeight);
+
+            return ToBitmapImage(resizedBitmap);
+        }
+
+        private BitmapImage[] ResizeImagesToSameSize(BitmapImage[] images)
+        {
+            if (images.Length == 0)
+            {
+                return images;
+            }
+
+            for (int i = 1; i < images.Length; i++)
+            {
+                images[i] = ResizeImage(images[i], images[0].PixelWidth, images[0].PixelHeight);
+            }
+
+            return images;
+        }
+
+        private BitmapImage ResizeImage(BitmapImage image, int targetWidth, int targetHeight)
+        {
+            Bitmap bitmap = BitmapImage2Bitmap(image);
+            Bitmap resizedBitmap = new Bitmap(targetWidth, targetHeight);
+
+            // Dibujar la imagen original en el nuevo bitmap con el tamaño objetivo
+            using (Graphics graphics = Graphics.FromImage(resizedBitmap))
+            {
+                graphics.DrawImage(bitmap, 0, 0, targetWidth, targetHeight);
+            }
+
+            return ToBitmapImage(resizedBitmap);
+        }
+
+
+        BitmapImage GenerateMosaic(BitmapImage img)
+        {
+            Bitmap bitmapAux = BitmapImage2Bitmap(img);
+
+            for (int f = 0; f < bitmapAux.Width; f++)
+            {
+                for (int c = 0; c < bitmapAux.Height; c++)
+                {
+                    System.Drawing.Color p = bitmapAux.GetPixel(c, f);
+                    int randomImg = new Random().Next(0, images.Length);
+                    AddToRow(ApplyColorFilter(images[randomImg], p));
+                }
+                AddNewRow(rowImage);
+            }
+
+            return mosaicImage;
+        }
+
+        void AddToRow(BitmapImage img)
+        {
+            try
+            {
+                Bitmap bitmapAux = BitmapImage2Bitmap(img);
+                Bitmap bitmapRow = rowImage != null ? BitmapImage2Bitmap(rowImage) : new Bitmap(1, bitmapAux.Height);
+
+                int combinedWidth = bitmapRow.Width + bitmapAux.Width;
+                int maxHeight = Math.Max(bitmapRow.Height, bitmapAux.Height);
+                Bitmap bitmapResult = new Bitmap(combinedWidth, maxHeight);
+
+                using (Graphics g = Graphics.FromImage(bitmapResult))
+                {
+                    g.DrawImage(bitmapRow, 0, 0);
+                    g.DrawImage(bitmapAux, bitmapRow.Width, 0);
+                }
+
+                rowImage = ToBitmapImage(bitmapResult);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al agregar la imagen a la fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        void AddNewRow(BitmapImage img)
+        {
+            try
+            {
+                Bitmap bitmapAux = BitmapImage2Bitmap(img);
+                Bitmap bitmapRow = mosaicImage != null ? BitmapImage2Bitmap(mosaicImage) : new Bitmap(bitmapAux.Width, 1);
+                
+                int maxWidth = Math.Max(bitmapRow.Width, bitmapAux.Width);
+                int combinedHeight = bitmapRow.Height + bitmapAux.Height;
+                Bitmap bitmapResult = new Bitmap(maxWidth, combinedHeight);
+
+                using (Graphics g = Graphics.FromImage(bitmapResult))
+                {
+                    g.DrawImage(bitmapRow, 0, 0);
+                    g.DrawImage(bitmapAux, 0, bitmapRow.Height);
+                }
+
+                mosaicImage = ToBitmapImage(bitmapResult);
+                rowImage = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al agregar una nueva fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+
+
+        BitmapImage ApplyColorFilter(BitmapImage img, System.Drawing.Color color)
+        {
+            Bitmap bitmapAux = BitmapImage2Bitmap(img);
+            Bitmap bitmapResult = new Bitmap(bitmapAux.Width, bitmapAux.Height);
+            double NewColorOpacity = 0.3;//Cambiar la opacidad para aplicar más, o menos color
+            for (int x = 0; x < bitmapAux.Width; x++)
+            {
+                for (int y = 0; y < bitmapAux.Height; y++)
+                {
+                    System.Drawing.Color p = bitmapAux.GetPixel(x, y);
+
+                    int grayValue = (int)(p.R * 0.3 + p.G * 0.59 + p.B * 0.11);
+
+                    int r = (int)(grayValue * (1 - NewColorOpacity) + color.R * NewColorOpacity);
+                    int g = (int)(grayValue * (1 - NewColorOpacity) + color.G * NewColorOpacity);
+                    int b = (int)(grayValue * (1 - NewColorOpacity) + color.B * NewColorOpacity);
+
+                    bitmapResult.SetPixel(x, y, System.Drawing.Color.FromArgb(r, g, b));
+                }
+            }
+
+            return ToBitmapImage(bitmapResult);
+        }
+
+        private Bitmap BitmapImage2Bitmap(BitmapImage imgOrg)
+        {
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(imgOrg));
+                enc.Save(outStream);
+                Bitmap bitmap = new Bitmap(outStream);
+
+                return new Bitmap(bitmap);
+            }
+        }
+
+        public static BitmapImage ToBitmapImage(System.Drawing.Image bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
             }
         }
     }
