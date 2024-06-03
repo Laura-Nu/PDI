@@ -133,3 +133,9 @@ C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\
 C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.csproj.CopyComplete
 C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.exe
 C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\PDI_Mosaico.pdb
+C:\Dario\PDI\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Templates.baml
+C:\Dario\PDI\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Control.g.cs
+C:\Dario\PDI\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Menu.g.cs
+C:\Dario\PDI\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\App.baml
+C:\Dario\PDI\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Control.baml
+C:\Dario\PDI\PDI\PDI_Mosaico\PDI_Mosaico\obj\Debug\Menu.baml

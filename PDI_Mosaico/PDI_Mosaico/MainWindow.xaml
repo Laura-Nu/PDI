@@ -50,5 +50,23 @@
         </StackPanel>
         <Image x:Name="img_display_original" HorizontalAlignment="Left" Height="358" Margin="22,142,0,0" VerticalAlignment="Top" Width="400"/>
         <Image x:Name="img_display_result" HorizontalAlignment="Left" Height="358" Margin="472,142,0,0" VerticalAlignment="Top" Width="400"/>
+
+        <!-- Define the ScrollViewer and ItemsControl -->
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="317,142,308,94">
+            <ItemsControl x:Name="imagesItemsControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                            <Image Source="{Binding}" Width="200" Height="200" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>

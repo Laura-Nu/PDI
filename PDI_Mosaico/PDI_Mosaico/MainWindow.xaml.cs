@@ -28,6 +28,7 @@ namespace PDI_Mosaico
         BitmapImage mosaicImage;
         BitmapImage rowImage;
         BitmapImage[] images;
+        private string selectedFolderName;
 
         public MainWindow()
         {
@@ -51,12 +52,11 @@ namespace PDI_Mosaico
 
         private void btnLoadImages_Click(object sender, RoutedEventArgs e)
         {
+            images = null;
             images = LoadImagesFromFolder();
             images = ResizeImagesToSameSize(images);
-            if (images.Length > 0)
-            {
-                // imgDisplay.Source = images[1];
-            }
+            imagesItemsControl.ItemsSource = images;
+
             btnLoadImages.Visibility = Visibility.Collapsed;
             RetrybtnLoadImages.Visibility = Visibility.Visible;
         }
@@ -68,9 +68,9 @@ namespace PDI_Mosaico
             System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string folderPath = fbd.SelectedPath;
+                string selectedFolderName = fbd.SelectedPath;
 
-                var imageFiles = Directory.GetFiles(folderPath, "*.*")
+                var imageFiles = Directory.GetFiles(selectedFolderName, "*.*")
                                           .Where(file => file.EndsWith(".jpg") ||
                                                          file.EndsWith(".jpeg") ||
                                                          file.EndsWith(".png"))
