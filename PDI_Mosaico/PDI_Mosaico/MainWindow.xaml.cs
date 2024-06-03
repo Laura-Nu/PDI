@@ -41,7 +41,7 @@ namespace PDI_Mosaico
             {
                 string fileName = ofd.FileName;
                 originalImage = new BitmapImage(new Uri(fileName));
-                originalImage = ReduceResolution(originalImage, 20, 20);
+                originalImage = ReduceResolution(originalImage, 85, 85);
                 img_display_original.Source = originalImage;
                 LoadImageBtn.Visibility = Visibility.Collapsed;
             }
@@ -216,13 +216,14 @@ namespace PDI_Mosaico
         {
             Bitmap bitmapAux = BitmapImage2Bitmap(img);
 
-            for (int f = 0; f < bitmapAux.Width; f++)
+            for (int f = 0; f < bitmapAux.Width; f+=2)
             {
-                for (int c = 0; c < bitmapAux.Height; c++)
+                for (int c = 0; c < bitmapAux.Height; c+=2)
                 {
                     System.Drawing.Color p = bitmapAux.GetPixel(c, f);
                     int randomImg = new Random().Next(0, images.Length);
-                    AddToRow(ApplyColorFilter(images[randomImg], p));
+                    BitmapImage resizedImage = ResizeImage(images[randomImg], 70, 70);
+                    AddToRow(ApplyColorFilter(resizedImage, p));
                 }
                 AddNewRow(rowImage);
             }
@@ -289,7 +290,7 @@ namespace PDI_Mosaico
         {
             Bitmap bitmapAux = BitmapImage2Bitmap(img);
             Bitmap bitmapResult = new Bitmap(bitmapAux.Width, bitmapAux.Height);
-            double NewColorOpacity = 0.3;//Cambiar la opacidad para aplicar más, o menos color
+            double NewColorOpacity = 0.5;//Cambiar la opacidad para aplicar más, o menos color
             for (int x = 0; x < bitmapAux.Width; x++)
             {
                 for (int y = 0; y < bitmapAux.Height; y++)
