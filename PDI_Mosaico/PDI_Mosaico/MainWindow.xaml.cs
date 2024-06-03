@@ -28,7 +28,7 @@ namespace PDI_Mosaico
         BitmapImage mosaicImage;
         BitmapImage rowImage;
         BitmapImage[] images;
-        private string selectedFolderName;
+        string selectedFolderName;
 
         public MainWindow()
         {
@@ -68,7 +68,7 @@ namespace PDI_Mosaico
             System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string selectedFolderName = fbd.SelectedPath;
+                selectedFolderName = fbd.SelectedPath;
 
                 var imageFiles = Directory.GetFiles(selectedFolderName, "*.*")
                                           .Where(file => file.EndsWith(".jpg") ||
