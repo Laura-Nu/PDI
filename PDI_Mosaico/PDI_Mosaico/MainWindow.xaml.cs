@@ -56,10 +56,15 @@ namespace PDI_Mosaico
             images = LoadImagesFromFolder();
             images = ResizeImagesToSameSize(images);
             imagesItemsControl.ItemsSource = images;
-
             btnLoadImages.Visibility = Visibility.Collapsed;
             RetrybtnLoadImages.Visibility = Visibility.Visible;
+
+            if (!string.IsNullOrEmpty(selectedFolderName))
+            {
+                FolderNameTextBlock.Text = $"Carpeta: {System.IO.Path.GetFileName(selectedFolderName)}";
+            }
         }
+
 
         private BitmapImage[] LoadImagesFromFolder()
         {
