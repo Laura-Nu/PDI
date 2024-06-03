@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -107,6 +107,7 @@ namespace PDI_Mosaico
             {
                 SendButton.Visibility = Visibility.Collapsed;
                 ResultButtonsPanel.Visibility = Visibility.Visible;
+                ProgressPanel.Visibility = Visibility.Visible;
                 img_display_result.Source = GenerateMosaic(originalImage);
             }
             else
@@ -123,6 +124,10 @@ namespace PDI_Mosaico
                 LoadImageBtn.Visibility = Visibility.Visible;
                 SendButton.Visibility = Visibility.Visible;
                 ResultButtonsPanel.Visibility = Visibility.Collapsed;
+                RetryLoadImageBtn.Visibility = Visibility.Collapsed;
+                LoadImageBtn.Visibility = Visibility.Visible;
+                RetrybtnLoadImages.Visibility = Visibility.Collapsed;
+                btnLoadImages.Visibility = Visibility.Visible;
                 img_display_original.Source = null;
                 img_display_result.Source = null;
             }
