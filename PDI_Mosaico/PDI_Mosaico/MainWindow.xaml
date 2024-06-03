@@ -6,67 +6,83 @@
         xmlns:local="clr-namespace:PDI_Mosaico"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="600"
-        Width="900"
+        Height="700"
+        Width="1200"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
     <Grid Background="#23262B">
+        <StackPanel Background="#2E333A"
+            Width="246"
+            Orientation="Vertical"
+            HorizontalAlignment="Left">
+            <Grid Height="50"
+                  VerticalAlignment="Top"
+                  Margin="0,30,0,0">
+                <Border Background="#D61734"
+                        Height="25"
+                        CornerRadius="3,0,0,3"
+                        Width="6"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right" />
+            </Grid>
+
+            <!-- Aquí se añade el TextBlock para el nombre del archivo -->
+            <TextBlock x:Name="FolderNameTextBlock" Text="Nombre de la carpeta" Foreground="White" 
+                       Margin="10,20,10,10" HorizontalAlignment="Center" />
+
+            <!-- Aquí se integra el ScrollViewer con el ItemsControl -->
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10,0,10,10" Width="226">
+                <ItemsControl x:Name="imagesItemsControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                                <Image Source="{Binding}" Width="200" Height="200" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+
         <TextBlock Text="P I X E L  M O S A I C" Foreground="#FFFFFF" FontFamily="Fonts/#Orbitron Medium"
                    FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,22,0,0" />
 
-
         <Button x:Name="LoadImageBtn" Content="C A R G A R   I M A G E N" FontFamily="Fonts/#Orbitron Medium"
              FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
-             Margin="22,65,458,485" Click="LoadImageBtn_Click" />
+             Margin="230,63,450,587" Click="LoadImageBtn_Click" />
 
         <Button x:Name="btnLoadImages" Content="C A R G A R   C A R P E T A" FontFamily="Fonts/#Orbitron Medium" FontSize="15" 
-             Background="#2E333A" Foreground="White" Width="420" Height="50" Click="btnLoadImages_Click" Margin="458,65,22,485" />
-
+             Background="#2E333A" Foreground="White" Width="420" Height="50" Click="btnLoadImages_Click" Margin="666,63,14,587" />
 
         <Button x:Name="RetryLoadImageBtn" Content="V O L V E R  A  C A R G A R   I M A G E N" FontFamily="Fonts/#Orbitron Medium"
-      FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
-      Margin="22,65,458,485" Click="RetryLoadImageBtn_Click" Visibility="Collapsed" />
+              FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
+              Margin="230,63,450,587" Click="RetryLoadImageBtn_Click" Visibility="Collapsed" />
 
         <Button x:Name="RetrybtnLoadImages" Content="V O L V E R  A  C A R G A R   C A R P E T A" FontFamily="Fonts/#Orbitron Medium" FontSize="15" 
-      Background="#2E333A" Foreground="White" Width="420" Height="50" Click="RetrybtnLoadImages_Click" Visibility="Collapsed" Margin="458,65,22,485"/>
+              Background="#2E333A" Foreground="White" Width="420" Height="50" Click="RetrybtnLoadImages_Click" Visibility="Collapsed" Margin="666,63,14,587"/>
 
         <Button x:Name="CloseBtn" Style="{StaticResource CloseBtnStyle}" Click="CloseBtn_Click" />
 
         <Button x:Name="SendButton" Content="E N V I A R" FontFamily="Fonts/#Orbitron Medium"
-                FontSize="15" Background="#2E333A" Foreground="White" HorizontalAlignment="Center"
-                Height="50" Margin="0,536,0,0" VerticalAlignment="Top" Width="856" Click="SendButton_Click" />
+                FontSize="15" Background="#2E333A" Foreground="White" HorizontalAlignment="Left"
+                Height="50" Margin="280,568,0,0" VerticalAlignment="Top" Width="856" Click="SendButton_Click" />
 
-        <StackPanel x:Name="ResultButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,536,0,0"
+        <StackPanel x:Name="ResultButtonsPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="280,568,0,0"
                     VerticalAlignment="Top" Width="856" Visibility="Collapsed">
-
             <Button x:Name="RetryButton" Content="R E I N T E N T A R" FontFamily="Fonts/#Orbitron Medium"
                     FontSize="15" Background="#2E333A" Foreground="White" Width="420" Height="50"
                     Margin="0,0,16,0" Click="RetryButton_Click" />
-
             <Button x:Name="DownloadButton" Content="D E S C A R G A R" FontFamily="Fonts/#Orbitron Medium" FontSize="15" 
                     Background="#2E333A" Foreground="White" Width="420" Height="50" Click="DownloadButton_Click" />
-
         </StackPanel>
-        <Image x:Name="img_display_original" HorizontalAlignment="Left" Height="358" Margin="22,142,0,0" VerticalAlignment="Top" Width="400"/>
-        <Image x:Name="img_display_result" HorizontalAlignment="Left" Height="358" Margin="472,142,0,0" VerticalAlignment="Top" Width="400"/>
 
-        <!-- Define the ScrollViewer and ItemsControl -->
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="317,142,308,94">
-            <ItemsControl x:Name="imagesItemsControl">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="1" Margin="5">
-                            <Image Source="{Binding}" Width="200" Height="200" />
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <Image x:Name="img_display_original" HorizontalAlignment="Left" Height="358" Margin="284,156,0,0" VerticalAlignment="Top" Width="400"/>
+        <Image x:Name="img_display_result" HorizontalAlignment="Left" Height="358" Margin="734,156,0,0" VerticalAlignment="Top" Width="400"/>
     </Grid>
 </Window>
