@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +45,7 @@ namespace PDI_Mosaico
                 originalImage = ReduceResolution(originalImage, 85, 85);
                 
                 LoadImageBtn.Visibility = Visibility.Collapsed;
+                RetryLoadImageBtn.Visibility = Visibility.Visible;
             }
         }
 
@@ -56,6 +57,8 @@ namespace PDI_Mosaico
             {
                 // imgDisplay.Source = images[1];
             }
+            btnLoadImages.Visibility = Visibility.Collapsed;
+            RetrybtnLoadImages.Visibility = Visibility.Visible;
         }
 
         private BitmapImage[] LoadImagesFromFolder()
@@ -115,6 +118,8 @@ namespace PDI_Mosaico
                 LoadImageBtn.Visibility = Visibility.Visible;
                 SendButton.Visibility = Visibility.Visible;
                 ResultButtonsPanel.Visibility = Visibility.Collapsed;
+                img_display_original.Source = null;
+                img_display_result.Source = null;
             }
             else
             {
@@ -340,6 +345,19 @@ namespace PDI_Mosaico
 
                 return bitmapImage;
             }
+        }
+
+        private void RetryLoadImageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RetryLoadImageBtn.Visibility = Visibility.Collapsed;
+            LoadImageBtn.Visibility = Visibility.Visible;
+            img_display_original.Source = null;
+        }
+
+        private void RetrybtnLoadImages_Click(object sender, RoutedEventArgs e)
+        {
+            RetrybtnLoadImages.Visibility = Visibility.Collapsed;
+            btnLoadImages.Visibility = Visibility.Visible;
         }
     }
 }
