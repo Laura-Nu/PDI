@@ -35,6 +35,31 @@ namespace PDI_Mosaico
             InitializeComponent();
         }
 
+        string[] loadingMessages = new string[]
+        {
+            "Cargando, por favor espera...",
+            "Preparando todo para ti...",
+            "Estamos trabajando en ello...",
+            "Casi listo, solo un momento más...",
+            "Procesando tu solicitud...",
+            "Esto no tomará mucho tiempo...",
+            "Todo está en marcha, paciencia...",
+            "Los detalles se están afinando...",
+            "Gracias por tu paciencia...",
+            "¡Estamos en ello! Ya casi...",
+            "Finalizando los últimos detalles...",
+            "Tu espera será recompensada...",
+            "La magia está sucediendo...",
+            "Todo estará listo en breve...",
+            "Estamos casi allí...",
+            "Asegurando todo para ti...",
+            "Conectando los puntos...",
+            "Ajustando los últimos parámetros...",
+            "Estamos en la recta final...",
+            "¡Gracias por esperar, ya casi terminamos!"
+};
+
+
         private void LoadImageBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -101,14 +126,26 @@ namespace PDI_Mosaico
             Close();
         }
 
-        private void SendButton_Click(object sender, RoutedEventArgs e)
+        private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
             if (img_display_original.Source != null)
             {
-                SendButton.Visibility = Visibility.Collapsed;
-                ResultButtonsPanel.Visibility = Visibility.Visible;
+                SendButton.IsEnabled = false;
                 ProgressPanel.Visibility = Visibility.Visible;
-                img_display_result.Source = GenerateMosaic(originalImage);
+                SendButton.Visibility = Visibility.Collapsed;
+
+                await Task.Run(() =>
+                {
+                    GenerateMosaicWithProgress(originalImage);
+                });
+
+                Dispatcher.Invoke(() =>
+                {
+                    img_display_result.Source = mosaicImage;
+                    ProgressPanel.Visibility = Visibility.Collapsed;
+                    SendButton.IsEnabled = true;
+                    ResultButtonsPanel.Visibility = Visibility.Visible;
+                });
             }
             else
             {
@@ -116,6 +153,9 @@ namespace PDI_Mosaico
                 controlWindow.Show();
             }
         }
+
+
+
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
@@ -218,7 +258,6 @@ namespace PDI_Mosaico
             Bitmap bitmap = BitmapImage2Bitmap(image);
             Bitmap resizedBitmap = new Bitmap(targetWidth, targetHeight);
 
-            // Dibujar la imagen original en el nuevo bitmap con el tamaño objetivo
             using (Graphics graphics = Graphics.FromImage(resizedBitmap))
             {
                 graphics.DrawImage(bitmap, 0, 0, targetWidth, targetHeight);
@@ -228,23 +267,50 @@ namespace PDI_Mosaico
         }
 
 
-        BitmapImage GenerateMosaic(BitmapImage img)
+        private void GenerateMosaicWithProgress(BitmapImage img)
         {
             Bitmap bitmapAux = BitmapImage2Bitmap(img);
+            int totalSteps = (bitmapAux.Width / 2) * (bitmapAux.Height / 2);
+            int currentStep = 0;
+            int messageIndex = 0;
 
-            for (int f = 0; f < bitmapAux.Width; f+=2)
+            double messageChangeValue = Math.Ceiling(totalSteps / (double)loadingMessages.Length);
+
+            Dispatcher.Invoke(() =>
             {
-                for (int c = 0; c < bitmapAux.Height; c+=2)
+                lblLoadingMessage.Content = loadingMessages[messageIndex];
+            });
+
+            for (int f = 0; f < bitmapAux.Width; f += 2)
+            {
+                for (int c = 0; c < bitmapAux.Height; c += 2)
                 {
                     System.Drawing.Color p = bitmapAux.GetPixel(c, f);
                     int randomImg = new Random().Next(0, images.Length);
                     BitmapImage resizedImage = ResizeImage(images[randomImg], 70, 70);
                     AddToRow(ApplyColorFilter(resizedImage, p));
+
+                    currentStep++;
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        ProgressBar.Value = (double)currentStep / totalSteps * 100;
+                        ProgressText.Text = $"{(int)((double)currentStep / totalSteps * 100)}% completado";
+
+                        if (currentStep > messageChangeValue * (messageIndex + 1) && messageIndex < loadingMessages.Length - 1)
+                        {
+                            messageIndex++;
+                            lblLoadingMessage.Content = loadingMessages[messageIndex];
+                        }
+                    });
                 }
                 AddNewRow(rowImage);
             }
 
-            return mosaicImage;
+            Dispatcher.Invoke(() =>
+            {
+                lblLoadingMessage.Content = "";
+            });
         }
 
         void AddToRow(BitmapImage img)

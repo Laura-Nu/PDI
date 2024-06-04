@@ -123,10 +123,11 @@
                     Height="50"
                     Width="856"
                     Click="SendButton_Click" />
-            <Grid x:Name="ProgressPanel" Visibility="Collapsed" Height="50" Width="856">
+            <Grid x:Name="ProgressPanel" Visibility="Collapsed"  Height="70" Width="856">
                 <ProgressBar x:Name="ProgressBar" Height="20" VerticalAlignment="Center" Margin="20,0,20,0"/>
                 <Image Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" wpfAnimatedGif:ImageBehavior.AnimatedSource="Assets/loading.gif" />
                 <TextBlock x:Name="ProgressText" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,30,0,0" Foreground="White" />
+                <Label x:Name="lblLoadingMessage" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-16,0,0" Foreground="White" Height="26" Width="277" />
             </Grid>
         </Grid>
 
