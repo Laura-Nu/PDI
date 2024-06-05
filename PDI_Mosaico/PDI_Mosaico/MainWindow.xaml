@@ -28,9 +28,10 @@
                         HorizontalAlignment="Right" />
             </Grid>
             <TextBlock x:Name="FolderNameTextBlock"
-                       Text="Nombre de la carpeta"
+                       FontFamily="Fonts/#Roboto Light"
+                       FontSize="14"
                        Foreground="White"
-                       Margin="10,20,10,10"
+                       Margin="10,10,10,10"
                        HorizontalAlignment="Center" />
         </StackPanel>
 
@@ -61,7 +62,7 @@
                    FontSize="15"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
-                   Margin="10,22,0,0" />
+                   Margin="40,22,0,0" />
 
         <Button x:Name="LoadImageBtn"
                 Content="C A R G A R   I M A G E N"
@@ -127,7 +128,7 @@
                 <ProgressBar x:Name="ProgressBar" Height="20" VerticalAlignment="Center" Margin="20,0,20,0"/>
                 <Image Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" wpfAnimatedGif:ImageBehavior.AnimatedSource="Assets/loading.gif" />
                 <TextBlock x:Name="ProgressText" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,30,0,0" Foreground="White" />
-                <Label x:Name="lblLoadingMessage" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-16,0,0" Foreground="White" Height="26" Width="277" />
+                <Label x:Name="lblLoadingMessage" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,-16,0,0" Foreground="White" Height="26" Width="816" />
             </Grid>
         </Grid>
 

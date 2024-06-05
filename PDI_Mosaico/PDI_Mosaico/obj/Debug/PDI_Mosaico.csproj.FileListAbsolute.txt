@@ -166,3 +166,8 @@ C:\Users\Dell\Downloads\PDI-main (3)\PDI-main\PDI_Mosaico\PDI_Mosaico\bin\Debug\
 C:\Users\Dell\Downloads\PDI-main (3)\PDI-main\PDI_Mosaico\PDI_Mosaico\bin\Debug\WpfAnimatedGif.xml
 C:\Users\Dell\Downloads\PDI-main (3)\PDI-main\PDI_Mosaico\PDI_Mosaico\bin\Debug\XamlAnimatedGif.dll
 C:\Users\Dell\Downloads\PDI-main (3)\PDI-main\PDI_Mosaico\PDI_Mosaico\bin\Debug\XamlAnimatedGif.pdb
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\WpfAnimatedGif.dll
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\XamlAnimatedGif.dll
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\WpfAnimatedGif.pdb
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\WpfAnimatedGif.xml
+C:\Users\launu\OneDrive\Documentos\GitHub\PDI\PDI_Mosaico\PDI_Mosaico\bin\Debug\XamlAnimatedGif.pdb

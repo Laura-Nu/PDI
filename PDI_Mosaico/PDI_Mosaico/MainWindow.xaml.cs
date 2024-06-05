@@ -62,6 +62,7 @@ namespace PDI_Mosaico
 
         private void LoadImageBtn_Click(object sender, RoutedEventArgs e)
         {
+            originalImage = null;
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
             {
@@ -79,8 +80,8 @@ namespace PDI_Mosaico
         {
             images = null;
             images = LoadImagesFromFolder();
-            images = ResizeImagesToSameSize(images);
             imagesItemsControl.ItemsSource = images;
+            images = ResizeImagesToSameSize(images);
             btnLoadImages.Visibility = Visibility.Collapsed;
             RetrybtnLoadImages.Visibility = Visibility.Visible;
 
@@ -128,7 +129,7 @@ namespace PDI_Mosaico
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            if (img_display_original.Source != null)
+            if (img_display_original.Source != null && images != null)
             {
                 SendButton.IsEnabled = false;
                 ProgressPanel.Visibility = Visibility.Visible;
@@ -149,8 +150,7 @@ namespace PDI_Mosaico
             }
             else
             {
-                Control controlWindow = new Control();
-                controlWindow.Show();
+                ValidationMessage();
             }
         }
 
@@ -159,7 +159,7 @@ namespace PDI_Mosaico
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            if (img_display_original.Source != null)
+            if (img_display_original.Source != null && images != null)
             {
                 LoadImageBtn.Visibility = Visibility.Visible;
                 SendButton.Visibility = Visibility.Visible;
@@ -170,11 +170,13 @@ namespace PDI_Mosaico
                 btnLoadImages.Visibility = Visibility.Visible;
                 img_display_original.Source = null;
                 img_display_result.Source = null;
+                imagesItemsControl.ItemsSource = null;
+                FolderNameTextBlock.Text = string.Empty;
+                images = null;
             }
             else
             {
-                var controlWindow = new Control();
-                controlWindow.Show();
+                ValidationMessage();
             }
         }
 
@@ -207,22 +209,30 @@ namespace PDI_Mosaico
                             {
                                 encoder.Save(fs);
                             }
-                            MessageBox.Show("La imagen se guardó correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                            //MessageBox.Show("La imagen se guardó correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                            Control controlWindow = new Control("La imagen se guardó correctamente.");
+                            controlWindow.Show();
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Ocurrió un error al guardar la imagen: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //MessageBox.Show($"Ocurrió un error al guardar la imagen: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            Control controlWindow = new Control("Ocurrió un error inesperado.");
+                            controlWindow.Show();
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Formato de archivo no compatible.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //MessageBox.Show("Formato de archivo no compatible.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Control controlWindow = new Control("Formato de archivo no compatible.");
+                        controlWindow.Show();
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No hay una imagen para guardar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("No hay una imagen para guardar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Control controlWindow = new Control("No hay una imagen para guardar.");
+                controlWindow.Show();
             }
         }
 
@@ -269,6 +279,7 @@ namespace PDI_Mosaico
 
         private void GenerateMosaicWithProgress(BitmapImage img)
         {
+            mosaicImage = null;
             Bitmap bitmapAux = BitmapImage2Bitmap(img);
             int totalSteps = (bitmapAux.Width / 2) * (bitmapAux.Height / 2);
             int currentStep = 0;
@@ -287,15 +298,15 @@ namespace PDI_Mosaico
                 {
                     System.Drawing.Color p = bitmapAux.GetPixel(c, f);
                     int randomImg = new Random().Next(0, images.Length);
-                    BitmapImage resizedImage = ResizeImage(images[randomImg], 70, 70);
+                    BitmapImage resizedImage = ResizeImage(images[randomImg], 80, 80);
                     AddToRow(ApplyColorFilter(resizedImage, p));
 
                     currentStep++;
 
                     Dispatcher.Invoke(() =>
                     {
-                        ProgressBar.Value = (double)currentStep / totalSteps * 100;
-                        ProgressText.Text = $"{(int)((double)currentStep / totalSteps * 100)}% completado";
+                        ProgressBar.Value = Math.Min((double)currentStep / totalSteps * 100, 100);
+                        ProgressText.Text = $"{Math.Min((int)((double)currentStep / totalSteps * 100), 100)}% completado";
 
                         if (currentStep > messageChangeValue * (messageIndex + 1) && messageIndex < loadingMessages.Length - 1)
                         {
@@ -334,7 +345,9 @@ namespace PDI_Mosaico
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al agregar la imagen a la fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show($"Error al agregar la imagen a la fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Control controlWindow = new Control("Error al agregar la imagen a la fila.");
+                controlWindow.Show();
             }
         }
 
@@ -360,7 +373,9 @@ namespace PDI_Mosaico
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al agregar una nueva fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show($"Error al agregar una nueva fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Control controlWindow = new Control("Error al agregar una nueva fila.");
+                controlWindow.Show();
             }
         }
 
@@ -428,12 +443,37 @@ namespace PDI_Mosaico
             RetryLoadImageBtn.Visibility = Visibility.Collapsed;
             LoadImageBtn.Visibility = Visibility.Visible;
             img_display_original.Source = null;
+            
         }
 
         private void RetrybtnLoadImages_Click(object sender, RoutedEventArgs e)
         {
             RetrybtnLoadImages.Visibility = Visibility.Collapsed;
             btnLoadImages.Visibility = Visibility.Visible;
+            imagesItemsControl.ItemsSource = null;
+            FolderNameTextBlock.Text = string.Empty;
+            images = null;
+        }
+
+
+        void ValidationMessage()
+        {
+            string message;
+            if (img_display_original.Source == null && images == null)
+            {
+                message = "Seleccione imagen y carpeta.";
+            }
+            else if (img_display_original.Source == null)
+            {
+                message = "Seleccione una imagen.";
+            }
+            else
+            {
+                message = "Seleccione carpeta fuente.";
+            }
+
+            Control controlWindow = new Control(message);
+            controlWindow.Show();
         }
     }
 }

@@ -19,58 +19,59 @@
                 HorizontalAlignment="Center">
 
                 <Grid Height="50"
-              VerticalAlignment="Top"
-              Margin="0,20,0,0">
+                      VerticalAlignment="Top"
+                      Margin="0,20,0,0">
 
                     <Border Background="#D61734"
-                    Height="25"
-                    CornerRadius="3,0,0,3"
-                    Width="6"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right" />
+                        Height="25"
+                        CornerRadius="3,0,0,3"
+                        Width="6"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right" />
 
                     <TextBlock Text="P I X E L  M O S A I C"
-                       Foreground="#FFFFFF"
-                       FontFamily="Fonts/#Orbitron Medium"
-                       FontSize="15"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center" />
-
+                           Foreground="#FFFFFF"
+                           FontFamily="Fonts/#Orbitron Medium"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
                 </Grid>
 
-
                 <Menu Height="151"
-              Background="Transparent"
-              Margin="0,20,0,0">
+                      Background="Transparent"
+                      Margin="0,20,0,0">
 
                     <Menu.ItemsPanel>
 
                         <ItemsPanelTemplate>
-
                             <VirtualizingStackPanel Orientation="Vertical" />
-
                         </ItemsPanelTemplate>
 
                     </Menu.ItemsPanel>
 
-                    <MenuItem Header="C A R G U E  U N A  I M A G E N"
-                              Foreground="#FFFFFF"
+                    <MenuItem Foreground="#FFFFFF"
                                 FontFamily="Fonts/#Roboto Light"
                                 FontSize="15"
+                                Height="72" Width="288" >
+                        <MenuItem.Header>
+                            <TextBlock  x:Name="dynamicMenuItem"
+                                HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                HorizontalAlignment="Center" Height="72" Width="214">
+                                TextAlignment="Center"
+                                Foreground="#FFFFFF" Width="274" Height="67"/>
+                        </MenuItem.Header>
                     </MenuItem>
 
                     <MenuItem>
                         <MenuItem.Header>
                             <Button x:Name="SendButton"
-                            Content="OK"
-                            FontSize="20"
-                            FontFamily="Fonts/#Orbitron Medium"
-                            Background="#FF4A4C4E"
-                            Foreground="White"
-                            Height="72" 
-                            Width="287" Click="SendButton_Click"/>
+                                Content="OK"
+                                FontSize="20"
+                                FontFamily="Fonts/#Orbitron Medium"
+                                Background="#FF4A4C4E"
+                                Foreground="White"
+                                Height="72" 
+                                Width="287" Click="SendButton_Click"/>
                         </MenuItem.Header>
                     </MenuItem>
 

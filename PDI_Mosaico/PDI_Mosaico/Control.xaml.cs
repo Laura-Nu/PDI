@@ -19,9 +19,10 @@ namespace PDI_Mosaico
     /// </summary>
     public partial class Control : Window
     {
-        public Control()
+        public Control(string message)
         {
             InitializeComponent();
+            dynamicMenuItem.Text = message.ToUpper();
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
