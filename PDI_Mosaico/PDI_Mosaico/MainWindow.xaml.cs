@@ -29,6 +29,7 @@ namespace PDI_Mosaico
         BitmapImage rowImage;
         BitmapImage[] images;
         string selectedFolderName;
+        int resolution = 0;
 
         public MainWindow()
         {
@@ -69,7 +70,7 @@ namespace PDI_Mosaico
                 string fileName = ofd.FileName;
                 originalImage = new BitmapImage(new Uri(fileName));
                 img_display_original.Source = originalImage;
-                originalImage = ReduceResolution(originalImage, 85, 85);
+                originalImage = ReduceResolution(originalImage, 90, 90);
                 
                 LoadImageBtn.Visibility = Visibility.Collapsed;
                 RetryLoadImageBtn.Visibility = Visibility.Visible;
@@ -129,15 +130,19 @@ namespace PDI_Mosaico
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            if (img_display_original.Source != null && images != null)
+            if (img_display_original.Source != null && images != null && resolution != 0)
             {
                 SendButton.IsEnabled = false;
                 ProgressPanel.Visibility = Visibility.Visible;
                 SendButton.Visibility = Visibility.Collapsed;
+                RetryLoadImageBtn.Visibility = Visibility.Hidden;
+                RetrybtnLoadImages.Visibility = Visibility.Hidden;
+                stkOpciones.Visibility = Visibility.Hidden;
+                img_display_result.Visibility = Visibility.Visible;
 
                 await Task.Run(() =>
                 {
-                    GenerateMosaicWithProgress(originalImage);
+                    GenerateMosaicWithProgress(originalImage, resolution);
                 });
 
                 Dispatcher.Invoke(() =>
@@ -159,25 +164,21 @@ namespace PDI_Mosaico
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            if (img_display_original.Source != null && images != null)
-            {
-                LoadImageBtn.Visibility = Visibility.Visible;
-                SendButton.Visibility = Visibility.Visible;
-                ResultButtonsPanel.Visibility = Visibility.Collapsed;
-                RetryLoadImageBtn.Visibility = Visibility.Collapsed;
-                LoadImageBtn.Visibility = Visibility.Visible;
-                RetrybtnLoadImages.Visibility = Visibility.Collapsed;
-                btnLoadImages.Visibility = Visibility.Visible;
-                img_display_original.Source = null;
-                img_display_result.Source = null;
-                imagesItemsControl.ItemsSource = null;
-                FolderNameTextBlock.Text = string.Empty;
-                images = null;
-            }
-            else
-            {
-                ValidationMessage();
-            }
+            LoadImageBtn.Visibility = Visibility.Visible;
+            SendButton.Visibility = Visibility.Visible;
+            ResultButtonsPanel.Visibility = Visibility.Collapsed;
+            RetryLoadImageBtn.Visibility = Visibility.Collapsed;
+            LoadImageBtn.Visibility = Visibility.Visible;
+            RetrybtnLoadImages.Visibility = Visibility.Collapsed;
+            btnLoadImages.Visibility = Visibility.Visible;
+            img_display_original.Source = null;
+            img_display_result.Source = null;
+            imagesItemsControl.ItemsSource = null;
+            FolderNameTextBlock.Text = string.Empty;
+            images = null;
+            stkOpciones.Visibility = Visibility.Visible;
+            resolution = 0;
+            CleanRadioSelection();
         }
 
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
@@ -277,11 +278,11 @@ namespace PDI_Mosaico
         }
 
 
-        private void GenerateMosaicWithProgress(BitmapImage img)
+        private void GenerateMosaicWithProgress(BitmapImage img, int resolution)
         {
             mosaicImage = null;
             Bitmap bitmapAux = BitmapImage2Bitmap(img);
-            int totalSteps = (bitmapAux.Width / 2) * (bitmapAux.Height / 2);
+            int totalSteps = (bitmapAux.Width / resolution) * (bitmapAux.Height / resolution);
             int currentStep = 0;
             int messageIndex = 0;
 
@@ -292,9 +293,9 @@ namespace PDI_Mosaico
                 lblLoadingMessage.Content = loadingMessages[messageIndex];
             });
 
-            for (int f = 0; f < bitmapAux.Width; f += 2)
+            for (int f = 0; f < bitmapAux.Width; f += resolution)
             {
-                for (int c = 0; c < bitmapAux.Height; c += 2)
+                for (int c = 0; c < bitmapAux.Height; c += resolution)
                 {
                     System.Drawing.Color p = bitmapAux.GetPixel(c, f);
                     int randomImg = new Random().Next(0, images.Length);
@@ -459,21 +460,53 @@ namespace PDI_Mosaico
         void ValidationMessage()
         {
             string message;
-            if (img_display_original.Source == null && images == null)
+            if (img_display_original.Source == null && images == null && resolution == 0)
+            {
+                message = "Seleccione imagen, carpeta y resolución.";
+            }
+            else if (img_display_original.Source == null && images == null)
             {
                 message = "Seleccione imagen y carpeta.";
             }
+            else if (img_display_original.Source == null && resolution == 0)
+            {
+                message = "Seleccione imagen y resolución.";
+            }
+            else if (images == null && resolution == 0)
+            {
+                message = "Seleccione carpeta y resolución.";
+            }
             else if (img_display_original.Source == null)
             {
-                message = "Seleccione una imagen.";
+                message = "Seleccione la imagen.";
+            }
+            else if (images == null)
+            {
+                message = "Seleccione carpeta fuente.";
             }
             else
             {
-                message = "Seleccione carpeta fuente.";
+                message = "Seleccione la resolución.";
             }
 
             Control controlWindow = new Control(message);
             controlWindow.Show();
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton)
+            {
+                resolution = int.Parse(radioButton.Tag.ToString());
+            }
+        }
+
+        void CleanRadioSelection()
+        {
+            rb1.IsChecked = false;
+            rb2.IsChecked = false;
+            rb3.IsChecked = false;
+            rb4.IsChecked = false;
         }
     }
 }

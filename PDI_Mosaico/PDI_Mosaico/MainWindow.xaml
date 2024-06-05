@@ -171,6 +171,22 @@
                Height="358"
                Margin="734,156,0,0"
                VerticalAlignment="Top"
-               Width="400" />
+               Width="400" Visibility="Collapsed"/>
+        <StackPanel x:Name="stkOpciones" Orientation="Vertical" Margin="818,156,126,382">
+            <TextBlock Text="Seleccione la calidad de su imagen"
+                       FontFamily="Fonts/#Roboto Light"
+                       FontSize="15"
+                       Foreground="White"
+                       Margin="10,10,10,10"
+                       HorizontalAlignment="Center" />
+            <RadioButton x:Name="rb1" GroupName="OptionsGroup" Content="Máxima Calidad" Tag="1" FontFamily="Fonts/#Roboto Light"
+                       FontSize="14" Foreground="White" Margin="5" Click="RadioButton_Click"/>
+            <RadioButton x:Name="rb2" GroupName="OptionsGroup" Content="Buena Calidad" Tag="2" FontFamily="Fonts/#Roboto Light"
+                       FontSize="14" Foreground="White" Margin="5" Click="RadioButton_Click"/>
+            <RadioButton x:Name="rb3" GroupName="OptionsGroup" Content="Calidad Media" Tag="3" FontFamily="Fonts/#Roboto Light"
+                       FontSize="14" Foreground="White" Margin="5" Click="RadioButton_Click"/>
+            <RadioButton x:Name="rb4" GroupName="OptionsGroup" Content="Calidad Baja" Tag="4" FontFamily="Fonts/#Roboto Light"
+                       FontSize="14" Foreground="White" Margin="5" Click="RadioButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
