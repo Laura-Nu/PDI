@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PDI_Mosaico"
         mc:Ignorable="d"
         Height="260"
-        Width="300"
+        Width="350"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
@@ -14,7 +14,7 @@
         <Grid Background="#23262B">
 
             <StackPanel Background="#2E333A"
-                Width="300"
+                Width="350"
                 Orientation="Vertical"
                 HorizontalAlignment="Center">
 
@@ -52,17 +52,17 @@
                     <MenuItem Foreground="#FFFFFF"
                                 FontFamily="Fonts/#Roboto Light"
                                 FontSize="15"
-                                Height="72" Width="288" >
+                                Height="72" Width="337" >
                         <MenuItem.Header>
                             <TextBlock  x:Name="dynamicMenuItem"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"
-                                Foreground="#FFFFFF" Width="274" Height="67"/>
+                                Foreground="#FFFFFF" Width="326" Height="67"/>
                         </MenuItem.Header>
                     </MenuItem>
 
-                    <MenuItem>
+                    <MenuItem Width="297">
                         <MenuItem.Header>
                             <Button x:Name="SendButton"
                                 Content="OK"
