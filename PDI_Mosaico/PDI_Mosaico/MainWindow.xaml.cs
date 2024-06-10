@@ -316,7 +316,7 @@ namespace PDI_Mosaico
                         }
                     });
                 }
-                AddNewRow(rowImage);
+                Dispatcher.Invoke(() => AddNewRow(rowImage));
             }
 
             Dispatcher.Invoke(() =>
@@ -346,9 +346,11 @@ namespace PDI_Mosaico
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"Error al agregar la imagen a la fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Control controlWindow = new Control("Error al agregar la imagen a la fila.");
-                controlWindow.Show();
+                Dispatcher.Invoke(() =>
+                {
+                    Control controlWindow = new Control("Error al agregar la imagen a la fila.");
+                    controlWindow.Show();
+                });
             }
         }
 
@@ -358,7 +360,7 @@ namespace PDI_Mosaico
             {
                 Bitmap bitmapAux = BitmapImage2Bitmap(img);
                 Bitmap bitmapRow = mosaicImage != null ? BitmapImage2Bitmap(mosaicImage) : new Bitmap(bitmapAux.Width, 1);
-                
+
                 int maxWidth = Math.Max(bitmapRow.Width, bitmapAux.Width);
                 int combinedHeight = bitmapRow.Height + bitmapAux.Height;
                 Bitmap bitmapResult = new Bitmap(maxWidth, combinedHeight);
@@ -374,9 +376,11 @@ namespace PDI_Mosaico
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"Error al agregar una nueva fila: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Control controlWindow = new Control("Error al agregar una nueva fila.");
-                controlWindow.Show();
+                Dispatcher.Invoke(() =>
+                {
+                    Control controlWindow = new Control("Error al agregar una nueva fila.");
+                    controlWindow.Show();
+                });
             }
         }
 
